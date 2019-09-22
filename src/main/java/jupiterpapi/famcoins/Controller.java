@@ -13,6 +13,11 @@ public class Controller {
     @Autowired private TransactionRepository transRepo;
     @Autowired private TransactingService transService;
 
+    @GetMapping("/helloworld")
+    public String helloworld() {
+        return "Server is working well! ;)";
+    }
+
     @PostMapping("/user")
     public User createUser(@RequestBody User user) {
         return userRepo.save(user);
