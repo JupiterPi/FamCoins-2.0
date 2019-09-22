@@ -1,7 +1,11 @@
 package jupiterpapi.famcoins;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class FamCoins {
     public static void main(String[] args) {
-        System.out.println("App starts correctly!");
+        SpringApplication.run(FamCoins.class, args);
     }
 }
