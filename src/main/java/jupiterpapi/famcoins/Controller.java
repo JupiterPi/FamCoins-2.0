@@ -11,6 +11,7 @@ public class Controller {
     @Autowired private UserRepository userRepo;
     @Autowired private AccountRepository accountRepo;
     @Autowired private TransactionRepository transRepo;
+    @Autowired private TransactingService transService;
 
     @PostMapping("/user")
     public User createUser(@RequestBody User user) {
@@ -34,11 +35,11 @@ public class Controller {
 
     @PostMapping("/transaction")
     public Transaction createTransaction(@RequestBody Transaction trans) {
-        return transRepo.save(trans);
+        return transService.createTransaction(trans);
     }
 
     @GetMapping("/transaction/{accountId}")
     public List<Transaction> getTransactionsByAccountId(@PathVariable String accountId) {
-        return transRepo.findTransactionByAccountId(accountId);
+        return transService.getTransactionsByAccountId(accountId);
     }
 }

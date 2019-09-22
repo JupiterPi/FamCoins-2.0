@@ -25,6 +25,10 @@ public class Account {
     }
 
     public void add(float amount) {
+        this.amount += amount;
+    }
+
+    public void subtract(float amount) {
         this.amount -= amount;
     }
 }
