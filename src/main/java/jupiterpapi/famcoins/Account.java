@@ -31,4 +31,20 @@ public class Account {
     public void subtract(float amount) {
         this.amount -= amount;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
 }

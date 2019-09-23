@@ -1,3 +1,22 @@
+function helloworld() {
+    get("/helloworld", function(msg) {
+        element("out").innerText = msg;
+    });
+}
+
+
+// document functions
+
+function element(id) {
+    return document.getElementById(id);
+}
+
+function value(id) {
+    return element(id).value;
+}
+
+// http.js
+
 function get(path, handling) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

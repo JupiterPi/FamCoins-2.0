@@ -12,6 +12,8 @@ public class Controller {
     @Autowired private AccountRepository accountRepo;
     @Autowired private TransactionRepository transRepo;
     @Autowired private TransactingService transService;
+    @Autowired private MoneyRequestRepository requestRepo;
+    @Autowired private MoneyRequestingService requestService;
 
     @GetMapping("/helloworld")
     public String helloworld() {
@@ -46,5 +48,20 @@ public class Controller {
     @GetMapping("/transaction/{accountId}")
     public List<Transaction> getTransactionsByAccountId(@PathVariable String accountId) {
         return transService.getTransactionsByAccountId(accountId);
+    }
+
+    @PostMapping("/moneyRequest")
+    public MoneyRequest createMoneyRequest(@RequestBody MoneyRequest request) {
+        return requestRepo.save(request);
+    }
+
+    @PostMapping("/answerMoneyRequest/{id}/{answer}")
+    public void answerMoneyRequest(@PathVariable String id, @PathVariable String answer) {
+        requestService.answer(id, (answer.equals("true")));
+    }
+
+    @GetMapping("/moneyRequest/{id}")
+    public MoneyRequest getMoneyRequest(@PathVariable String id) {
+        return requestRepo.findMoneyRequestById(id);
     }
 }
