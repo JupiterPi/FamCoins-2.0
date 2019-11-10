@@ -83,46 +83,58 @@ function createArrayFromJSON(json) {
 }
 
 function writeTable(divid, json) {
+    console.log("writeTable");
     var div = element(divid);
     var table = createTableFromJSON(json);
+    table.setAttribute("id", "tablein:" + divid);
     div.appendChild(table);
 }
 
 
 // tables meta data
 
-function metalizeTable(table, metaUrl) {
-    getJSON(metaUrl, function(meta) {
+function metalizeTable(tableId) {
+    console.log("metalizeTable");
+    var table = element(tableId);
+    getJSON("/removementsMeta/user", function(meta) {
+        console.log("meta:::" + meta);
         removeHeadings(table, meta);
-        formatHeadings(table, meta);
-        console.log("metalized table");
+        getJSON("/namesMeta/user", function(meta) {
+            formatHeadings(table, meta);
+        });
     });
+    
 }
 
-function removeHeadings(table, meta) {
-    var removesMeta = meta.removements;
+function removeHeadings(table, removesMeta) {
+    console.log("removeHeadings");
+    console.log("removeHeadings: table = " + table);
     var rows = table.childNodes;
-    var headingObjects = rows[0];
+    var headingObjects = rows[0].childNodes;
+    console.log("headingObjects: " + headingObjects);
     var removeColumns = [];
     for (a in removesMeta) {
         var removeMeta = removesMeta[a];
         for (b in headingObjects) {
             var headingObject = headingObjects[b];
+            console.log("headingObject: " + headingObject);
             if (headingObject.innerText == removeMeta) removeColumns.push(b);
         }
     }
     for (a in removeColumns) {
         var removeColumn = removeColumns[a];
         for (b in rows) {
+            console.log("removeHeadings.final.b: " + b);
             var row = rows[b];
+            console.log("removeHeadings.final.row: " + row);
             var field = row.childNodes[removeColumn];
             row.removeChild(field);
         }
     }
 }
 
-function formatHeadings(table, meta) {
-    var namesMeta = meta.headingNames;
+function formatHeadings(table, namesMeta) {
+    console.log("formatHeadings");
     var headingObjects = table.childNodes[0].childNodes;
     for (a in namesMeta) {
         var nameMeta = namesMeta[a];
@@ -148,9 +160,11 @@ function get(path, handling) {
 }
 
 function getJSON(path, handling) {
+    console.log("getJSON");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            console.log("got response from: " + path);
             handling(JSON.parse(this.responseText));
         }
     }

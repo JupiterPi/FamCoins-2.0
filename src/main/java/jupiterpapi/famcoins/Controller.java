@@ -65,6 +65,56 @@ public class Controller {
         return requestRepo.findMoneyRequestById(id);
     }
 
+    @GetMapping("/namesMeta/{table}")
+    public HeadingNameMetaData[] getHeadingNameMetaData(@PathVariable String table) {
+        switch (table) {
+            case "user":
+                return new HeadingNameMetaData[]{
+                        new HeadingNameMetaData("id", "ID"),
+                        new HeadingNameMetaData("firstName", "First Name"),
+                        new HeadingNameMetaData("lastName", "Last Name"),
+                        new HeadingNameMetaData("password", "Password")};
+            case "account":
+                return new HeadingNameMetaData[]{
+                        new HeadingNameMetaData("id", "ID"),
+                        new HeadingNameMetaData("userId", "User-ID"),
+                        new HeadingNameMetaData("currency", "Currency"),
+                        new HeadingNameMetaData("amount", "Amount")
+                };
+            case "transaction":
+                return new HeadingNameMetaData[]{
+                        new HeadingNameMetaData("id", "ID"),
+                        new HeadingNameMetaData("amount", "Amount"),
+                        new HeadingNameMetaData("createdById", "Created by (ID)"),
+                        new HeadingNameMetaData("createdAt", "Created at"),
+                        new HeadingNameMetaData("fromId", "From (ID)"),
+                        new HeadingNameMetaData("toId", "To (ID)")
+                };
+            case "moneyrequest":
+                return new HeadingNameMetaData[]{
+                        new HeadingNameMetaData("id", "ID"),
+                        new HeadingNameMetaData("amount", "Amount"),
+                        new HeadingNameMetaData("createdById", "Created by (ID)"),
+                        new HeadingNameMetaData("getMoneyFrom", "Get money from (ID)"),
+                        new HeadingNameMetaData("createdAt", "Created at"),
+                        new HeadingNameMetaData("answered", "Answered"),
+                        new HeadingNameMetaData("answer", "Answer")
+                };
+            default:
+                return null;
+        }
+    }
+
+    @GetMapping("/removementsMeta/{table}")
+    public String[] getRemovementsMetaData(@PathVariable String table) {
+        switch (table) {
+            case "user": return new String[]{"lastName", "password"};
+            case "transaction": return new String[]{};
+            case "moneyrequest": return new String[]{};
+            default: return null;
+        }
+    }
+
     @PostMapping("/deleteAll")
     public void deleteAll() {
         userRepo.deleteAll();
