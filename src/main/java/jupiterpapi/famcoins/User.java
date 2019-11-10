@@ -20,6 +20,10 @@ public class User {
         return lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public boolean proofPassword(String password) {
         return (this.password.equals(password));
     }

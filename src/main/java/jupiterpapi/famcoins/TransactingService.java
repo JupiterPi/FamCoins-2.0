@@ -21,18 +21,19 @@ public class TransactingService {
         from.subtract(amount);
         to.add(amount);
         transRepo.save(trans);
-        //accountRepo.save(from); 
-        //accountRepo.save(to);
+        accountRepo.save(from);
+        accountRepo.save(to);
         return trans;
     }
 
     public List<Transaction> getTransactionsByAccountId(String accountId) {
-        // besser zweimal lesen und dannach zusammenführen
-        
-        List<Transaction> list = new ArrayList<Transaction>();
-        for (Transaction trans : transRepo.findAll()) {
-            if (trans.getFromId().equals(accountId) || trans.getToId().equals(accountId)) list.add(trans);
-        }
-        return list;
+        List<Transaction> gotByFromId = transRepo.findTransactionsByFromId(accountId);
+        List<Transaction> gotByToId = transRepo.findTransactionsByToId(accountId);
+
+        List<Transaction> summary = new ArrayList<Transaction>();
+        summary.addAll(gotByFromId);
+        summary.addAll(gotByToId);
+
+        return summary;
     }
 }

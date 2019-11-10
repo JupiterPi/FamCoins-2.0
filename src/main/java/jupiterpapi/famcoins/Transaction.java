@@ -9,6 +9,16 @@ public class Transaction {
     private float amount;
     private String createdById;
     private Date createdAt;
+
+    public Transaction(String id, float amount, String createdById, Date createdAt, String fromId, String toId) {
+        this.id = id;
+        this.amount = amount;
+        this.createdById = createdById;
+        this.createdAt = createdAt;
+        this.fromId = fromId;
+        this.toId = toId;
+    }
+
     private String fromId;
     private String toId;
 

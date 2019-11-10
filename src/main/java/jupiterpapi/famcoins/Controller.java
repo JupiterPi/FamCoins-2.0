@@ -64,4 +64,12 @@ public class Controller {
     public MoneyRequest getMoneyRequest(@PathVariable String id) {
         return requestRepo.findMoneyRequestById(id);
     }
+
+    @PostMapping("/deleteAll")
+    public void deleteAll() {
+        userRepo.deleteAll();
+        accountRepo.deleteAll();
+        transRepo.deleteAll();
+        requestRepo.deleteAll();
+    }
 }
