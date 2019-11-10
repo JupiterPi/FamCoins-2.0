@@ -16,5 +16,21 @@
         <div id="users_table">
             <h2>Users</h2>
         </div>
+        <button onclick="addTransImage()">Add column</button>
+        <script>
+            function addTransImage() {
+                var link = document.createElement("a");
+                link.href="#";
+                link.setAttribute("onclick", "showTablesFor(this.parentNode.parentNode.childNodes[0].innerText);");
+                var img = document.createElement("img");
+                img.src = "trans+mreq.png";
+                link.appendChild(img);
+                addColumn("tablein:users_table", "", link);
+            }
+
+            function showTablesFor(userId) {
+                alert(userId);
+            }
+        </script>
     </body>
 </html>

@@ -108,7 +108,7 @@ public class Controller {
     @GetMapping("/removementsMeta/{table}")
     public String[] getRemovementsMetaData(@PathVariable String table) {
         switch (table) {
-            case "user": return new String[]{"lastName", "password"};
+            case "user": return new String[]{"password"};
             case "transaction": return new String[]{};
             case "moneyrequest": return new String[]{};
             default: return null;

@@ -44,6 +44,32 @@ function addRow(tableid, fields) {
     table.appendChild(row);
 }
 
+function addColumn(tableid, headingLabel, fieldLabel) {
+    var table = element(tableid);
+    var rows = table.childNodes;
+
+    if (headingLabel != "") {
+        var headingsRow = rows[0];
+        var heading = document.createElement("th");
+        heading.innerText = headingLabel;
+        headingsRow.appendChild(heading);
+    }
+
+    for (var a = 1; a < rows.length; a++) {
+        var row = rows[a];
+        var field = document.createElement("td");
+        if (typeof fieldLabel == "string") field.innerHTML = fieldLabel;
+        else field.appendChild(fieldLabel);
+        row.appendChild(field);
+    }
+}
+
+function nodeListToArray(nodeList) {
+    var arr = [];
+    for (var x = 0; x < nodeList.length; x++) { arr.push(nodeList[x]); }
+    return arr;
+}
+
 function createTableFromJSON(objs) {
     console.log(objs);
     var table = document.createElement("table");
@@ -121,9 +147,10 @@ function removeHeadings(table, removesMeta) {
             if (headingObject.innerText == removeMeta) removeColumns.push(b);
         }
     }
+    removeColumns.reverse();
     for (a in removeColumns) {
         var removeColumn = removeColumns[a];
-        for (b in rows) {
+        for (var b = 0; b < rows.length; b++) {
             console.log("removeHeadings.final.b: " + b);
             var row = rows[b];
             console.log("removeHeadings.final.row: " + row);
