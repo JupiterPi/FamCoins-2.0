@@ -56,12 +56,20 @@ function addColumn(tableid, headingLabel, fieldLabel) {
     }
 
     for (var a = 1; a < rows.length; a++) {
+        var fieldLabelObject = fieldLabel.cloneNode(true);
         var row = rows[a];
         var field = document.createElement("td");
-        if (typeof fieldLabel == "string") field.innerHTML = fieldLabel;
-        else field.appendChild(fieldLabel);
+        if (typeof fieldLabelObject == "string") field.innerHTML = fieldLabelObject;
+        else {
+            field.appendChild(fieldLabelObject);
+            console.log("ADDCOLUMN:::childappended");
+        }
         row.appendChild(field);
     }
+}
+
+function copyJSON (src) {
+    return JSON.parse(JSON.stringify(src));
 }
 
 function nodeListToArray(nodeList) {

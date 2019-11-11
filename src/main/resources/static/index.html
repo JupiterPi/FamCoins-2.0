@@ -22,9 +22,11 @@
                 var link = document.createElement("a");
                 link.href="#";
                 link.setAttribute("onclick", "showTablesFor(this.parentNode.parentNode.childNodes[0].innerText);");
+
                 var img = document.createElement("img");
                 img.src = "trans+mreq.png";
                 link.appendChild(img);
+                
                 addColumn("tablein:users_table", "", link);
             }
 
