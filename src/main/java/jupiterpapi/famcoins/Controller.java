@@ -30,6 +30,11 @@ public class Controller {
         return accountRepo.save(account);
     }
 
+    @GetMapping("/account/{userId}")
+    public Account[] getAccountsByUserId(@PathVariable String userId) {
+        return accountRepo.findAccountsByUserId(userId);
+    }
+
     @GetMapping("/user")
     public List<User> getAllUsers() {
         return userRepo.findAll();
