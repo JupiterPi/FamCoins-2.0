@@ -82,16 +82,18 @@ function createTableFromJSON(objs) {
     console.log(objs);
     var table = document.createElement("table");
 
-    var headingsObject = document.createElement("tr");
-    var headings = Object.keys(objs[0]);
-    console.log(headings);
-    for (heading in headings) {
-        console.log(headings[heading]);
-        var headingObject = document.createElement("th");
-        headingObject.innerText = headings[heading];
-        headingsObject.appendChild(headingObject);
+    if (objs.length > 0) {
+        var headingsObject = document.createElement("tr");
+        var headings = Object.keys(objs[0]);
+        console.log(headings);
+        for (heading in headings) {
+            console.log(headings[heading]);
+            var headingObject = document.createElement("th");
+            headingObject.innerText = headings[heading];
+            headingsObject.appendChild(headingObject);
+        }
+        table.appendChild(headingsObject);
     }
-    table.appendChild(headingsObject);
 
     for (obj in objs) {
         var row = objs[obj];

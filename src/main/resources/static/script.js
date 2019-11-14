@@ -4,7 +4,16 @@ function getJSONAsTable(url, divId, metaPath, additional) {
         writeTable(divId, json);
         metalizeTable("tablein:" + divId, metaPath);
         console.log("addidtionals doing now!!!!!!");
-        additional();
+        
+        var table = element("tablein:" + divId);
+        if (table.childNodes.length == 0) {
+            var div = element(divId);
+            div.removeChild(table);
+            var warning = document.createElement("span");
+            warning.className = "warning";
+            warning.innerText = "Nothing to show!";
+            div.appendChild(warning);
+        } else additional();
     })
 }
 
