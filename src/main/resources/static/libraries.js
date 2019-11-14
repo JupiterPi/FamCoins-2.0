@@ -127,13 +127,13 @@ function writeTable(divid, json) {
 
 // tables meta data
 
-function metalizeTable(tableId) {
+function metalizeTable(tableId, metaPath) {
     console.log("metalizeTable");
     var table = element(tableId);
-    getJSON("/removementsMeta/user", function(meta) {
+    getJSON("/removementsMeta/" + metaPath, function(meta) {
         console.log("meta:::" + meta);
         removeHeadings(table, meta);
-        getJSON("/namesMeta/user", function(meta) {
+        getJSON("/namesMeta/" + metaPath, function(meta) {
             formatHeadings(table, meta);
         });
     });

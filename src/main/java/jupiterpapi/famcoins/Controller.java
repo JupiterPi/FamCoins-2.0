@@ -114,6 +114,7 @@ public class Controller {
     public String[] getRemovementsMetaData(@PathVariable String table) {
         switch (table) {
             case "user": return new String[]{"password"};
+            case "account": return new String[]{};
             case "transaction": return new String[]{};
             case "moneyrequest": return new String[]{};
             default: return null;

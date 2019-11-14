@@ -1,19 +1,18 @@
-function getJSONAsTable(url, divId, additional) {
+function getJSONAsTable(url, divId, metaPath, additional) {
     console.log("getJSONAsTable");
     getJSON(url, function(json) {
         writeTable(divId, json);
-        metalizeTable("tablein:" + divId);
+        metalizeTable("tablein:" + divId, metaPath);
         console.log("addidtionals doing now!!!!!!");
         additional();
     })
 }
 
-function addTableLink(divId, imgSrc, action) {
+function addTableLink(divId, imgSrc, actionFunctionName) {
     console.log("addTableLink for " + divId);
     var link = document.createElement("a");
     link.href="#";
-    link.onclick = action;
-    console.log("action:::" + action);
+    link.setAttribute("onclick", actionFunctionName + "(this.parentNode.parentNode.childNodes[0].innerText);");
 
     var img = document.createElement("img");
     img.src = imgSrc;
@@ -23,24 +22,18 @@ function addTableLink(divId, imgSrc, action) {
 }
 
 function showUsers() {
-    getJSONAsTable("/user", "users_table", function() {
-        addTableLink("users_table", "acc.png", function() {showAccounts(this.parentNode.parentNode.childNodes[0].innerText);});
+    getJSONAsTable("/user", "users_table", "user", function() {
+        addTableLink("users_table", "acc.png", "showAccounts");
     });
 }
 
 function showAccounts(userId) {
-    var div = element("accounts_table");
-    var heading = document.createElement("h2");
-    heading.innerText = "Accounts of " + userId;
-    div.innerHTML="";
-    div.appendChild(heading);
+    console.log("showAccounts() called");
+    showTable("account", "/account", userId, "showTransactions", "trans+mreq.png");
+}
 
-    getJSONAsTable("/account/" + userId, "accounts_table", function() {
-        var action = function() {
-            showTransactions(this.parentNode.parentNode.childNodes[0].innerText);
-        }
-        addTableLink("accounts_table", "trans+mreq.png", action);
-    });
+function helloworld() {
+    console.log("action did");
 }
 
 function showTransactions(accountId) {
@@ -50,10 +43,11 @@ function showTransactions(accountId) {
     div.innerHTML="";
     div.appendChild(heading);
 
-    getJSONAsTable("/transaction/" + accountId, "transactions_table", function(){});
+    getJSONAsTable("/transaction/" + accountId, "transactions_table", "transaction", function(){});
 }
 
-function showTable(name, mapping, id, linkingFunction, imgSrc) {
+function showTable(name, mapping, id, linkingFunctionName, imgSrc) {
+    console.log("linkingFunctionName: " + linkingFunctionName);
     var divId = name + "s_table";
     console.log(divId);
     var div = element(divId);
@@ -63,15 +57,10 @@ function showTable(name, mapping, id, linkingFunction, imgSrc) {
     div.appendChild(heading);
 
     var linking = function() {
-        console.log("linking dig mit test: " + name);
-        var action = function() {
-            console.log("action did");
-            linkingFunction(this.parentNode.parentNode.childNodes[0].innerText);
-        }
-        addTableLink(name + "s_table", imgSrc, action);
+        addTableLink(name + "s_table", imgSrc, linkingFunctionName);
     }
 
-    getJSONAsTable(mapping + "/" + id, divId, linking);
+    getJSONAsTable(mapping + "/" + id, divId, name, linking);
 }
 
 function makeUpperCase(str) {
