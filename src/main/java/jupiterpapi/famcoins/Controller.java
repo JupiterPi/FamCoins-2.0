@@ -55,19 +55,19 @@ public class Controller {
         return transService.getTransactionsByAccountId(accountId);
     }
 
-    @PostMapping("/moneyRequest")
+    @PostMapping("/moneyrequest")
     public MoneyRequest createMoneyRequest(@RequestBody MoneyRequest request) {
         return requestRepo.save(request);
     }
 
-    @PostMapping("/answerMoneyRequest/{id}/{answer}")
+    @PostMapping("/answerMoneyrequest/{id}/{answer}")
     public void answerMoneyRequest(@PathVariable String id, @PathVariable String answer) {
         requestService.answer(id, (answer.equals("true")));
     }
 
-    @GetMapping("/moneyRequest/{id}")
-    public MoneyRequest getMoneyRequest(@PathVariable String id) {
-        return requestRepo.findMoneyRequestById(id);
+    @GetMapping("/moneyrequest/{accountId}")
+    public List<MoneyRequest> getMoneyRequest(@PathVariable String accountId) {
+        return requestRepo.findMoneyRequestsByCreatedById(accountId);
     }
 
     @GetMapping("/namesMeta/{table}")

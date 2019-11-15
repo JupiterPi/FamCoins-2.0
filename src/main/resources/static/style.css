@@ -9,20 +9,40 @@ body {
     font-family: Product Sans;
 }
 
-div.no-border {
-    border-style: none;
-    padding: unset;
-    background-color: unset;
-    border-radius: 0px;
-}
-
-div, span.warning {
+div.border, span.border {
     border-style: solid;
     border-color: darkgrey;
     border-width: thin;
-    padding: 5px;
     background-color: rgb(245, 245, 245);
     border-radius: 5px;
+}
+
+div.border {
+    padding:12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+div.border h2 {
+    margin-top: 0px;
+}
+
+span.border {
+    padding: 5px;
+}
+
+.success {
+    background-color: hsla(149, 23%, 78%, 1) !important;
+}
+
+.warning {
+    background-color: hsla(48, 58%, 75%, 1) !important;
+}
+
+.failure {
+    background-color: hsl(4, 56%, 79%) !important;
 }
 
 table {

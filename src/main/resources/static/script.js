@@ -3,14 +3,15 @@ function getJSONAsTable(url, divId, metaPath, additional) {
     getJSON(url, function(json) {
         writeTable(divId, json);
         metalizeTable("tablein:" + divId, metaPath);
-        console.log("addidtionals doing now!!!!!!");
         
+        var div = element(divId);
+        div.className = "border";
+
         var table = element("tablein:" + divId);
         if (table.childNodes.length == 0) {
-            var div = element(divId);
             div.removeChild(table);
             var warning = document.createElement("span");
-            warning.className = "warning";
+            warning.className = "border warning";
             warning.innerText = "Nothing to show!";
             div.appendChild(warning);
         } else additional();
@@ -38,11 +39,12 @@ function showUsers() {
 
 function showAccounts(userId) {
     console.log("showAccounts() called");
-    showTable("account", "/account", userId, "showTransactions", "trans+mreq.png");
+    showTable("account", "/account", userId, "showTransactionsAndMoneyRequests", "trans+mreq.png");
 }
 
-function helloworld() {
-    console.log("action did");
+function showTransactionsAndMoneyRequests(accountId) {
+    showTransactions(accountId);
+    showMoneyRequests(accountId);
 }
 
 function showTransactions(accountId) {
@@ -53,6 +55,17 @@ function showTransactions(accountId) {
     div.appendChild(heading);
 
     getJSONAsTable("/transaction/" + accountId, "transactions_table", "transaction", function(){});
+}
+
+function showMoneyRequests(accountId) {
+    console.warn("showMoneyRequests");
+    var div = element("moneyrequests_table");
+    var heading = document.createElement("h2");
+    heading.innerText = "Money Requests of " + accountId;
+    div.innerHTML="";
+    div.appendChild(heading);
+
+    getJSONAsTable("/moneyrequest/" + accountId, "moneyrequests_table", "moneyrequest", function(){});
 }
 
 function showTable(name, mapping, id, linkingFunctionName, imgSrc) {
