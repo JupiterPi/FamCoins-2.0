@@ -157,13 +157,10 @@ function writeTable(divid, json) {
 
 function metalizeTable(tableId, metaPath) {
     var table = element(tableId);
-    getJSON("/removementsMeta/" + metaPath, function(meta) {
-        removeHeadings(table, meta);
-        getJSON("/namesMeta/" + metaPath, function(meta) {
-            formatHeadings(table, meta);
-        });
-    });
-    
+    var removementsMeta = getJSONSync("/removementsMeta/" + metaPath, null);
+    removeHeadings(table, removementsMeta);
+    var namesMeta = getJSONSync("/namesMeta/" + metaPath, null);
+    formatHeadings(table, namesMeta);
 }
 
 function removeHeadings(table, removesMeta) {

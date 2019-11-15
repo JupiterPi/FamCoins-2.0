@@ -1,21 +1,20 @@
 function getJSONAsTable(url, divId, metaPath, additional) {
-    var json = getJSONSync(url);
-    writeTable(divId, json);
-    
-    var div = element(divId);
-    div.className = "border";
-
-    var table = element("tablein:" + divId);
-    if (table.childNodes.length == 0) {
-        div.removeChild(table);
-        var warning = document.createElement("span");
-        warning.className = "border warning";
-        warning.innerText = "Nothing to show!";
-        div.appendChild(warning);
-    } else {
+    getJSON(url, function(json) {
+        writeTable(divId, json);
         metalizeTable("tablein:" + divId, metaPath);
-        additional();
-    }
+        
+        var div = element(divId);
+        div.className = "border";
+
+        var table = element("tablein:" + divId);
+        if (table.childNodes.length == 0) {
+            div.removeChild(table);
+            var warning = document.createElement("span");
+            warning.className = "border warning";
+            warning.innerText = "Nothing to show!";
+            div.appendChild(warning);
+        } else additional();
+    })
 }
 
 function addTableLink(divId, imgSrc, actionFunctionName) {
