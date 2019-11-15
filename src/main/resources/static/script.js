@@ -1,5 +1,4 @@
 function getJSONAsTable(url, divId, metaPath, additional) {
-    console.log("getJSONAsTable");
     getJSON(url, function(json) {
         writeTable(divId, json);
         metalizeTable("tablein:" + divId, metaPath);
@@ -19,7 +18,6 @@ function getJSONAsTable(url, divId, metaPath, additional) {
 }
 
 function addTableLink(divId, imgSrc, actionFunctionName) {
-    console.log("addTableLink for " + divId);
     var link = document.createElement("a");
     link.href="#";
     link.setAttribute("onclick", actionFunctionName + "(this.parentNode.parentNode.childNodes[0].innerText);");
@@ -38,7 +36,6 @@ function showUsers() {
 }
 
 function showAccounts(userId) {
-    console.log("showAccounts() called");
     showTable("account", "/account", userId, "showTransactionsAndMoneyRequests", "trans+mreq.png");
 }
 
@@ -58,7 +55,6 @@ function showTransactions(accountId) {
 }
 
 function showMoneyRequests(accountId) {
-    console.warn("showMoneyRequests");
     var div = element("moneyrequests_table");
     var heading = document.createElement("h2");
     heading.innerText = "Money Requests of " + accountId;
@@ -69,9 +65,7 @@ function showMoneyRequests(accountId) {
 }
 
 function showTable(name, mapping, id, linkingFunctionName, imgSrc) {
-    console.log("linkingFunctionName: " + linkingFunctionName);
     var divId = name + "s_table";
-    console.log(divId);
     var div = element(divId);
     var heading = document.createElement("h2");
     heading.innerText = makeUpperCase(name) + "s of " + id;
