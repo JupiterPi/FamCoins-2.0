@@ -16,21 +16,39 @@ function value(id) {
 
 // form functions
 
-/* (in work)
-function createForm(metaPath) {
-    getJSON("/namesMeta/" + metaPath, function(meta) {
-        var form = document.createElement("form");
-
-        for (var a = 0; a < keys.length; a++) {
-            var key = keys[a];
-            var label = document.createElement("label");
-            label.innerText = key;
-            var input = document.createElement("input");
-            input.id = key;
-        }
-    });
+function writeForm(divId, keys, metaPath) {
+    var div = element(divId);
+    var form = createForm(keys, metaPath);
+    div.appendChild(form);
 }
-*/
+
+function createForm(keys, metaPath) {
+    var form = document.createElement("form");
+    var meta = getJSONSync("/namesMeta/" + metaPath, null);
+
+    for (var a = 0; a < keys.length; a++) {
+        var key = keys[a];
+        var label = document.createElement("label");
+        label.innerText = getMetalizedName(key, meta) + " ";
+        var input = document.createElement("input");
+        input.id = key;
+        var linebreak = document.createElement("br");
+        form.appendChild(label);
+        form.appendChild(input);
+        form.appendChild(linebreak);
+    }
+    form.remove(form.lastChild);
+
+    return form;
+}
+
+function getMetalizedName(givenName, meta) {
+    for (var a = 0; a < meta.length; a++) {
+        var metaObject = meta[a];
+        if (givenName == meta.from) return meta.from;
+    }
+    return givenName;
+}
 
 function getFormData(formId) {
     var form = element(formId);
