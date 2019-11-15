@@ -13,6 +13,41 @@ function value(id) {
     return element(id).value;
 }
 
+
+// form functions
+
+/* (in work)
+function createForm(metaPath) {
+    getJSON("/namesMeta/" + metaPath, function(meta) {
+        var form = document.createElement("form");
+
+        for (var a = 0; a < keys.length; a++) {
+            var key = keys[a];
+            var label = document.createElement("label");
+            label.innerText = key;
+            var input = document.createElement("input");
+            input.id = key;
+        }
+    });
+}
+*/
+
+function getFormData(formId) {
+    var form = element(formId);
+    var formData = new FormData();
+    var inputFields = form.getElementsByTagName("input");
+
+    for (var a = 0; a < inputFields.length; a++) {
+        var inputField = inputFields[a];
+        var key = inputField.id;
+        var value = inputField.value;
+        formData.append(key, value);
+    }
+
+    return formData;
+}
+
+
 // table functions
 
 function addRows(tableid, rows) {
@@ -189,10 +224,24 @@ function getJSON(path, handling) {
     xhttp.send();
 }
 
-function post(path) {
+function getSync(path, body) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", path, false);
+    xhttp.send(body);
+    if (xhttp.status = 200) {
+        return xhttp.responseText;
+    }
+}
+
+function getJSONSync(path, body) {
+    var responseText = getSync(path, body);
+    return JSON.parse(responseText);
+}
+
+function post(path, body) {
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", path);
-    xhttp.send();
+    xhttp.send(body);
 }
 
 function hyperlink(url) {
